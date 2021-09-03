@@ -1,5 +1,5 @@
 Name:           tensorflow
-Version:	%{VERSION}
+Version:	      %{VERSION}
 Release:        %{RELEASE}%{?dist}
 Summary:        An Open Source Machine Learning Framework for Everyone 
 License:        Apache 2
@@ -27,8 +27,8 @@ cp %{_topdir}/.tf_configure.bazelrc %{_builddir}/tensorflow-%{version}
 
 %build
 bazel clean
-bazel build --config=opt --define framework_shared_object=false //tensorflow:libtensorflow.so
-bazel build --config=opt --define framework_shared_object=false //tensorflow:libtensorflow_cc.so
+BAZEL_LINKLIBS=-l%:libstdc++.a bazel build --config=opt --define framework_shared_object=false //tensorflow:libtensorflow.so
+BAZEL_LINKLIBS=-l%:libstdc++.a bazel build --config=opt --define framework_shared_object=false //tensorflow:libtensorflow_cc.so
 
 %install
 rm -rf $RPM_BUILD_ROOT
